@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,6 +33,17 @@ public class Postagem implements Serializable{
 	@NotBlank
 	@Size(min = 15, max = 400)
 	private String txt;
+	
+	/*foreign key tema*/
+	/*@ManyToOne
+	@JoinColumn(name = "tema_id")
+	private Tema tema;
+	
+	/*foreign key usuario*/
+	/*@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
+	*/
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data = new java.sql.Date(System.currentTimeMillis());
