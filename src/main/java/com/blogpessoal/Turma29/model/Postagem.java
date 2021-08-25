@@ -49,7 +49,7 @@ public class Postagem implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-
+	//Metodos Get And Set
 	public Integer getId() {
 		return id;
 	}
