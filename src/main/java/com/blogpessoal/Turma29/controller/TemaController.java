@@ -1,8 +1,7 @@
 package com.blogpessoal.Turma29.controller;
 
 import java.util.List;
-
-import javax.validation.Valid;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,25 +15,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blogpessoal.Turma29.model.Postagem;
-import com.blogpessoal.Turma29.services.PostagemServices;
+import com.blogpessoal.Turma29.model.Tema;
+import com.blogpessoal.Turma29.services.TemaServices;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/postagens")
-public class PostagemController {
+@RequestMapping("/tema")
+public class TemaController {
 
-	
 	@Autowired
-	private PostagemServices service;
+	private TemaServices service;
 	
 	/*
 	 * Busca Todos
 	 * implementar o DTO depois pois estou com preguiça
 	 */
 	@GetMapping
-	public ResponseEntity<List<Postagem>> findAll(){
-		List<Postagem> obj = service.findAll();
+	public ResponseEntity<List<Tema>> findAll(){
+		List<Tema> obj = service.findAll();
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -42,24 +40,24 @@ public class PostagemController {
 	 * Busca pelo ID
 	 */
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Postagem> findById(@PathVariable Integer id){
-		ResponseEntity<Postagem> obj = service.findById(id);
+	public ResponseEntity<Tema> findById(@PathVariable Integer id){
+		ResponseEntity<Tema> obj = service.findById(id);
 		return obj;
 	}
 	
 	/*
-	 * Busca pelo Titulo
+	 * Busca pelo tema
 	 */
-	@GetMapping(value = "/titulo/{titulo}")
-	public ResponseEntity<List<Postagem>> findByTitulo(@PathVariable String titulo) {
-		ResponseEntity<List<Postagem>> obj = service.findByTitulo(titulo);
+	@GetMapping(value = "/tema/{tema}")
+	public ResponseEntity<Optional<Tema>> findByTema(@PathVariable String tema) {
+		ResponseEntity<Optional<Tema>> obj = service.findByTema(tema);
 		return obj;
 	}
 	
-	//Criação das postagens
+	//Criação dos Temas
 	@PostMapping
-	public ResponseEntity<Postagem> create(@RequestBody Postagem postagem){
-		ResponseEntity<Postagem> obj = service.create(postagem);
+	public ResponseEntity<Tema> create(@RequestBody Tema temas){
+		ResponseEntity<Tema> obj = service.createTema(temas);
 		return obj;
 	}
 	
@@ -67,18 +65,16 @@ public class PostagemController {
 	 *Update passando todas as informações no body 
 	 */
 	@PutMapping
-	public ResponseEntity<Postagem> Put(@RequestBody Postagem postagem){
-		ResponseEntity<Postagem> obj = service.update(postagem);
+	public ResponseEntity<Tema> Put(@RequestBody Tema temas){
+		ResponseEntity<Tema> obj = service.update(temas);
 		return obj;
 	}
 	
 	/*
-	 * Deleta uma postagem
+	 * Deleta um Tema
 	 */
 	@DeleteMapping("/{id}")
 	public void Delete(@PathVariable Integer id) {
 		service.delete(id);
 	}
-
 }
-

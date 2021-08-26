@@ -1,6 +1,7 @@
 package com.blogpessoal.Turma29.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -16,25 +17,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blogpessoal.Turma29.model.Postagem;
-import com.blogpessoal.Turma29.services.PostagemServices;
+import com.blogpessoal.Turma29.model.Usuario;
+import com.blogpessoal.Turma29.services.UsuarioServices;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/postagens")
-public class PostagemController {
+@RequestMapping("/user")
+public class UsuarioController {
 
-	
 	@Autowired
-	private PostagemServices service;
+	private UsuarioServices service;
 	
 	/*
 	 * Busca Todos
 	 * implementar o DTO depois pois estou com preguiça
 	 */
 	@GetMapping
-	public ResponseEntity<List<Postagem>> findAll(){
-		List<Postagem> obj = service.findAll();
+	public ResponseEntity<List<Usuario>> findAll(){
+		List<Usuario> obj = service.findAll();
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -42,24 +42,24 @@ public class PostagemController {
 	 * Busca pelo ID
 	 */
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Postagem> findById(@PathVariable Integer id){
-		ResponseEntity<Postagem> obj = service.findById(id);
+	public ResponseEntity<Usuario> findById(@PathVariable Integer id){
+		ResponseEntity<Usuario> obj = service.findById(id);
 		return obj;
 	}
 	
 	/*
-	 * Busca pelo Titulo
+	 * Busca pelo email
 	 */
-	@GetMapping(value = "/titulo/{titulo}")
-	public ResponseEntity<List<Postagem>> findByTitulo(@PathVariable String titulo) {
-		ResponseEntity<List<Postagem>> obj = service.findByTitulo(titulo);
+	@GetMapping(value = "/email/{email}")
+	public ResponseEntity<Optional<Usuario>> findByEmail(@PathVariable String email) {
+		ResponseEntity<Optional<Usuario>> obj = service.findByEmail(email);
 		return obj;
 	}
 	
-	//Criação das postagens
+	//Criação dos usuarios
 	@PostMapping
-	public ResponseEntity<Postagem> create(@RequestBody Postagem postagem){
-		ResponseEntity<Postagem> obj = service.create(postagem);
+	public Optional<Object> create(@RequestBody Usuario usuario){
+		Optional<Object> obj = service.createUser(usuario);
 		return obj;
 	}
 	
@@ -67,8 +67,8 @@ public class PostagemController {
 	 *Update passando todas as informações no body 
 	 */
 	@PutMapping
-	public ResponseEntity<Postagem> Put(@RequestBody Postagem postagem){
-		ResponseEntity<Postagem> obj = service.update(postagem);
+	public ResponseEntity<Usuario> Put(@RequestBody Usuario usuario){
+		ResponseEntity<Usuario> obj = service.update(usuario);
 		return obj;
 	}
 	
@@ -79,6 +79,4 @@ public class PostagemController {
 	public void Delete(@PathVariable Integer id) {
 		service.delete(id);
 	}
-
 }
-

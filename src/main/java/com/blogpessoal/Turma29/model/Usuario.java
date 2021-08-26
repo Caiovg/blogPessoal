@@ -1,15 +1,22 @@
 package com.blogpessoal.Turma29.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "usuario")
@@ -27,11 +34,16 @@ public class Usuario implements Serializable{
 	private String nome;
 	@NotBlank 
 	@Email
+	//para deixar a tabela no banco como unique @Column(unique=true)
 	private String email;
 	@NotBlank 
 	@Size(min = 5)
 	private String senha;
-		
+	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties({"usuario"})
+	private List<Postagem> minhasPostagens = new ArrayList<>();
+
 	public Usuario(Integer idUsuario, String nome, String email, String senha) {
 		super();
 		this.idUsuario = idUsuario;
@@ -69,6 +81,12 @@ public class Usuario implements Serializable{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+	public List<Postagem> getMinhasPostagens() {
+		return minhasPostagens;
+	}
+
+	public void setMinhasPostagens(List<Postagem> minhasPostagens) {
+		this.minhasPostagens = minhasPostagens;
+	}
 	
 }

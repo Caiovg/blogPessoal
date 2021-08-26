@@ -16,6 +16,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name  = "postagem")
 public class Postagem implements Serializable{
@@ -35,17 +38,20 @@ public class Postagem implements Serializable{
 	private String txt;
 	
 	/*foreign key tema*/
-	/*@ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "tema_id")
+	@JsonIgnoreProperties({"postagens"})
 	private Tema tema;
 	
 	/*foreign key usuario*/
-	/*@ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "usuario_id")
+	@JsonIgnoreProperties({"minhasPostagens"})
 	private Usuario usuario;
-	*/
+	
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm", locale = "pt-BR", timezone = "Brazil/East")
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
 	
@@ -99,6 +105,22 @@ public class Postagem implements Serializable{
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public Tema getTema() {
+		return tema;
+	}
+
+	public void setTema(Tema tema) {
+		this.tema = tema;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }
