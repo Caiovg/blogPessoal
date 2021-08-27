@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,15 +33,18 @@ public class Usuario implements Serializable{
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idUsuario;
-	@NotBlank
+	@NotBlank(message = "Informe seu nome")
 	private String nome;
-	@NotBlank 
+	@NotBlank(message = "Informe seu email") 
 	@Email
 	//para deixar a tabela no banco como unique @Column(unique=true)
 	private String email;
-	@NotBlank 
+	@NotBlank(message = "Informe sua senha") 
 	@Size(min = 5)
 	private String senha;
+	
+	@Enumerated(EnumType.STRING)
+	private Sexo sexo;
 	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({"usuario"})
@@ -88,5 +94,14 @@ public class Usuario implements Serializable{
 	public void setMinhasPostagens(List<Postagem> minhasPostagens) {
 		this.minhasPostagens = minhasPostagens;
 	}
+
+	public Sexo getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo;
+	}
+	
 	
 }

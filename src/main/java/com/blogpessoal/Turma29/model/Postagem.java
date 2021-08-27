@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name  = "postagem")
 public class Postagem implements Serializable{
 
+	/*teste*/
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -54,7 +55,6 @@ public class Postagem implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm", locale = "pt-BR", timezone = "Brazil/East")
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
-	
 	public Postagem(Integer id, String titulo, String txt, Date data) {
 		super();
 		this.id = id;
