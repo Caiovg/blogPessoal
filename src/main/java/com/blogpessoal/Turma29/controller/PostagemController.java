@@ -24,7 +24,7 @@ import com.blogpessoal.Turma29.services.PostagemServices;
 @RequestMapping("/postagens")
 public class PostagemController {
 
-	
+	/*test*/
 	@Autowired
 	private PostagemServices service;
 	
