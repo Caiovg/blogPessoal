@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -39,7 +37,11 @@ public class Usuario implements Serializable{
 	@Email
 	//para deixar a tabela no banco como unique @Column(unique=true)
 	private String email;
-	@NotBlank(message = "Informe sua senha") 
+	
+	@NotBlank(message = "Informe seu userName") 
+	private String usuario;
+	
+	@NotBlank(message = "Informe sua senha")
 	@Size(min = 5)
 	private String senha;
 	
@@ -81,6 +83,15 @@ public class Usuario implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
 	public String getSenha() {
 		return senha;
 	}

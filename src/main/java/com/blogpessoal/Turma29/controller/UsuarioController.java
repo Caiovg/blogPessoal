@@ -3,9 +3,9 @@ package com.blogpessoal.Turma29.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.blogpessoal.Turma29.model.UserLogin;
 import com.blogpessoal.Turma29.model.Usuario;
 import com.blogpessoal.Turma29.services.UsuarioServices;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
 	@Autowired
@@ -61,6 +62,12 @@ public class UsuarioController {
 	public Optional<Object> create(@RequestBody Usuario usuario){
 		Optional<Object> obj = service.createUser(usuario);
 		return obj;
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> Autentication(@RequestBody Optional<UserLogin> user){
+		return service.logar(user).map(resp -> ResponseEntity.ok(resp))
+				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
 	
 	/*

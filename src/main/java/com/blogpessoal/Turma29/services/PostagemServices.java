@@ -1,13 +1,10 @@
 package com.blogpessoal.Turma29.services;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.blogpessoal.Turma29.model.Postagem;
 import com.blogpessoal.Turma29.repository.PostagemRepository;
