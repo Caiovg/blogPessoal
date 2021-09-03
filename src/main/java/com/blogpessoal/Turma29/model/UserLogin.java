@@ -8,6 +8,7 @@ public class UserLogin {
 	
 	private String nome;
 	
+	//inves de usuario pode ser email
 	private String usuario;
 	
 	private String senha;
