@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.blogpessoal.Turma29.model.Tema;
 import com.blogpessoal.Turma29.repository.TemaRepository;
+import com.blogpessoal.Turma29.services.exception.DataIntegratyViolationException;
+import com.blogpessoal.Turma29.services.exception.ObjectNotFoundException;
 
 @Service
 public class TemaServices {
@@ -18,7 +20,12 @@ public class TemaServices {
 	
 	/*Busca todos as postagens*/
 	public List<Tema> findAll(){
-		return repository.findAll();
+		List<Tema> list = repository.findAll();
+		if(list.isEmpty()) {
+			throw new DataIntegratyViolationException("Não existe nenhum tema");
+		}
+		return list;
+		//return repository.findAll();
 	}
 	
 	/*
@@ -26,14 +33,18 @@ public class TemaServices {
 	 */
 	public ResponseEntity<Tema> findById(Integer id) {
 		return repository.findById((int) id).map(
-				resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+				resp -> ResponseEntity.ok(resp)).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + " não existe, Tipo: " + Tema.class.getName()));
 	}
 	
 	/*
 	 * Busca pelo tema
 	 */
-	public ResponseEntity<Optional<Tema>> findByTema(String email) {
-		return ResponseEntity.ok(repository.findByTema(email));
+	public ResponseEntity<Optional<Tema>> findByTema(String temas) {
+		Optional<Tema> tema = repository.findByTema(temas);
+		if(tema.isEmpty()) {
+			throw new DataIntegratyViolationException("Não existe nenhum tema com esse nome");
+		}
+		return ResponseEntity.ok(tema);
 	}
 	
 	/*
@@ -51,6 +62,7 @@ public class TemaServices {
 	}
 	
 	public void delete(Integer id) {
+		ResponseEntity<Tema> obj = findById(id);
 		repository.deleteById(id);
 	}
 }

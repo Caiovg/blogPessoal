@@ -3,6 +3,7 @@ package com.blogpessoal.Turma29.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,13 +60,13 @@ public class UsuarioController {
 	
 	//Criação dos usuarios
 	@PostMapping
-	public Optional<Object> create(@RequestBody Usuario usuario){
+	public Optional<Object> create(@Valid @RequestBody Usuario usuario){
 		Optional<Object> obj = service.createUser(usuario);
 		return obj;
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> Autentication(@RequestBody Optional<UserLogin> user){
+	public ResponseEntity<?> Autentication(@Valid @RequestBody Optional<UserLogin> user){
 		return service.logar(user).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
@@ -74,7 +75,7 @@ public class UsuarioController {
 	 *Update passando todas as informações no body 
 	 */
 	@PutMapping
-	public ResponseEntity<Usuario> Put(@RequestBody Usuario usuario){
+	public ResponseEntity<Usuario> Put(@Valid @RequestBody Usuario usuario){
 		ResponseEntity<Usuario> obj = service.update(usuario);
 		return obj;
 	}

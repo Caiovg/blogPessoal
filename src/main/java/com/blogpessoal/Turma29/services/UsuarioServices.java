@@ -10,9 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.blogpessoal.Turma29.model.Postagem;
 import com.blogpessoal.Turma29.model.UserLogin;
 import com.blogpessoal.Turma29.model.Usuario;
 import com.blogpessoal.Turma29.repository.UsuarioRepository;
+import com.blogpessoal.Turma29.services.exception.DataIntegratyViolationException;
+import com.blogpessoal.Turma29.services.exception.ObjectNotFoundException;
 
 @Service
 public class UsuarioServices {
@@ -22,7 +25,11 @@ public class UsuarioServices {
 	
 	/*Busca todos aos usuarios*/
 	public List<Usuario> findAll(){
-		return repository.findAll();
+		List<Usuario> list = repository.findAll();
+		if(list.isEmpty()) {
+			throw new DataIntegratyViolationException("Não existe nenhum usuario");
+		}
+		return list;
 	}
 	
 	/*
@@ -30,28 +37,32 @@ public class UsuarioServices {
 	 */
 	public ResponseEntity<Usuario> findById(Integer id) {
 		return repository.findById((int) id).map(
-				resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+				resp -> ResponseEntity.ok(resp)).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + " não existe, Tipo: " + Usuario.class.getName()));
 	}
 	
 	/*
 	 * Busca pelo email do usuario
 	 */
 	public ResponseEntity<Optional<Usuario>> findByEmail(String email) {
-		return ResponseEntity.ok(repository.findByEmail(email));
+		Optional<Usuario> user = repository.findByEmail(email);
+		if(user.isEmpty()) {
+			throw new DataIntegratyViolationException("Não existe nenhuma usuario com esse email");
+		}
+		return ResponseEntity.ok(user);
 	}
 	
 	/*
 	 * Cria um novo usuario
 	 */
 	public Optional<Object> createUser(Usuario usuario) {
-		return repository.findByEmail(usuario.getEmail()).map(usuarioExistente -> {
-			return Optional.empty();
+		return Optional.ofNullable(repository.findByEmail(usuario.getEmail()).map(usuarioExistente -> {
+			return Optional.empty().orElseThrow(() -> new ObjectNotFoundException("Email ja cadastrado"));
 		}).orElseGet(() -> {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			String senhaEncoder = encoder.encode(usuario.getSenha());
 			usuario.setSenha(senhaEncoder);
 			return Optional.ofNullable(repository.save(usuario));
-		});
+		}));
 	}
 	
 	/*
@@ -59,7 +70,7 @@ public class UsuarioServices {
 	 */
 	public Optional<?> logar(Optional<UserLogin> user){
 		//Verifica o email ou no meu caso o user
-		return repository.findByEmail(user.get().getUsuario()).map(usuarioExistente -> {
+		return Optional.ofNullable(repository.findByEmail(user.get().getUsuario()).map(usuarioExistente -> {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
 			//verifica as senhas 
@@ -76,12 +87,12 @@ public class UsuarioServices {
 					
 					return Optional.ofNullable(user);
 			}else {
-				return Optional.empty(); //Senha esteja incorreta
+				return Optional.empty().orElseThrow(() -> new ObjectNotFoundException("Senha Incorreta")); //Senha esteja incorreta
 			}
 			
 		}).orElseGet(() -> {
-			return Optional.empty(); //Email não existente
-		});
+			return Optional.empty().orElseThrow(() -> new ObjectNotFoundException("Usuario não registrado na base de dados.")); //Email não existente
+		}));
 	}
 	
 	
@@ -93,6 +104,7 @@ public class UsuarioServices {
 	}
 	
 	public void delete(Integer id) {
+		ResponseEntity<Usuario> obj = findById(id);
 		repository.deleteById(id);
 	}
 

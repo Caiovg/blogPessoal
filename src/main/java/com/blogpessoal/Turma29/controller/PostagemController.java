@@ -2,6 +2,7 @@ package com.blogpessoal.Turma29.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +58,7 @@ public class PostagemController {
 	
 	//Criação das postagens
 	@PostMapping
-	public ResponseEntity<Postagem> create(@RequestBody Postagem postagem){
+	public ResponseEntity<Postagem> create(@Valid @RequestBody Postagem postagem){
 		ResponseEntity<Postagem> obj = service.create(postagem);
 		return obj;
 	}
@@ -66,7 +67,7 @@ public class PostagemController {
 	 *Update passando todas as informações no body 
 	 */
 	@PutMapping
-	public ResponseEntity<Postagem> Put(@RequestBody Postagem postagem){
+	public ResponseEntity<Postagem> Put(@Valid @RequestBody Postagem postagem){
 		ResponseEntity<Postagem> obj = service.update(postagem);
 		return obj;
 	}

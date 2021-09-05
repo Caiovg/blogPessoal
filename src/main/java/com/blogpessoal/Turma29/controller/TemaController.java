@@ -3,6 +3,8 @@ package com.blogpessoal.Turma29.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -56,7 +58,7 @@ public class TemaController {
 	
 	//Criação dos Temas
 	@PostMapping
-	public ResponseEntity<Tema> create(@RequestBody Tema temas){
+	public ResponseEntity<Tema> create(@Valid @RequestBody Tema temas){
 		ResponseEntity<Tema> obj = service.createTema(temas);
 		return obj;
 	}
@@ -65,7 +67,7 @@ public class TemaController {
 	 *Update passando todas as informações no body 
 	 */
 	@PutMapping
-	public ResponseEntity<Tema> Put(@RequestBody Tema temas){
+	public ResponseEntity<Tema> Put(@Valid @RequestBody Tema temas){
 		ResponseEntity<Tema> obj = service.update(temas);
 		return obj;
 	}

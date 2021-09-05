@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.blogpessoal.Turma29.model.Postagem;
 import com.blogpessoal.Turma29.repository.PostagemRepository;
+import com.blogpessoal.Turma29.services.exception.DataIntegratyViolationException;
+import com.blogpessoal.Turma29.services.exception.ObjectNotFoundException;
 
 @Service
 public class PostagemServices {
@@ -17,7 +19,11 @@ public class PostagemServices {
 
 	/*Busca todos as postagens*/
 	public List<Postagem> findAll(){
-		return repository.findAll();
+		List<Postagem> list = repository.findAll();
+		if(list.isEmpty()) {
+			throw new DataIntegratyViolationException("Não existe nenhuma postagem");
+		}
+		return list;
 	}
 	
 	/*
@@ -25,14 +31,18 @@ public class PostagemServices {
 	 */
 	public ResponseEntity<Postagem> findById(Integer id) {
 		return repository.findById((int) id).map(
-				resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+				resp -> ResponseEntity.ok(resp)).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + " não existe, Tipo: " + Postagem.class.getName()));
 	}
 	
 	/*
 	 * Busca pelo Titulo da postagem
 	 */
 	public ResponseEntity<List<Postagem>> findByTitulo(String titulo) {
-		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
+		List<Postagem> postagem = repository.findAllByTituloContainingIgnoreCase(titulo);
+		if(postagem.isEmpty()) {
+			throw new DataIntegratyViolationException("Não existe nenhuma postagem com esse titulo");
+		}
+		return ResponseEntity.ok(postagem);
 	}
 	
 	/*
@@ -50,6 +60,7 @@ public class PostagemServices {
 	}
 	
 	public void delete(Integer id) {
+		ResponseEntity<Postagem> obj = findById(id);
 		repository.deleteById(id);
 	}
 }
