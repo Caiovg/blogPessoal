@@ -52,9 +52,7 @@ public class Usuario implements Serializable{
 	@JsonIgnoreProperties({"usuario"})
 	private List<Postagem> minhasPostagens = new ArrayList<>();
 
-	public Usuario(Integer idUsuario, String nome, String email, String senha) {
-		super();
-		this.idUsuario = idUsuario;
+	public Usuario(String nome, String email, String senha) {
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
