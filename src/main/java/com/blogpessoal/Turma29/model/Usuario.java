@@ -45,16 +45,14 @@ public class Usuario implements Serializable{
 	@Size(min = 5)
 	private String senha;
 	
-	@Enumerated(EnumType.STRING)
-	private Sexo sexo;
-	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({"usuario"})
 	private List<Postagem> minhasPostagens = new ArrayList<>();
 
-	public Usuario(String nome, String email, String senha) {
+	public Usuario(String nome, String email, String usuario, String senha) {
 		this.nome = nome;
 		this.email = email;
+		this.usuario = usuario;
 		this.senha = senha;
 	}
 	
@@ -103,14 +101,5 @@ public class Usuario implements Serializable{
 	public void setMinhasPostagens(List<Postagem> minhasPostagens) {
 		this.minhasPostagens = minhasPostagens;
 	}
-
-	public Sexo getSexo() {
-		return sexo;
-	}
-
-	public void setSexo(Sexo sexo) {
-		this.sexo = sexo;
-	}
-	
 	
 }
