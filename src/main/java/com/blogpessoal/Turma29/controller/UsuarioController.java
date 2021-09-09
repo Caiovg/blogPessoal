@@ -44,7 +44,7 @@ public class UsuarioController {
 	 * Busca pelo ID
 	 */
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Usuario> findById(@PathVariable Integer id){
+	public ResponseEntity<Usuario> findById(@PathVariable Long id){
 		ResponseEntity<Usuario> obj = service.findById(id);
 		return obj;
 	}
@@ -84,7 +84,7 @@ public class UsuarioController {
 	 * Deleta uma postagem
 	 */
 	@DeleteMapping("/{id}")
-	public void Delete(@PathVariable Integer id) {
+	public void Delete(@PathVariable Long id) {
 		service.delete(id);
 	}
 }

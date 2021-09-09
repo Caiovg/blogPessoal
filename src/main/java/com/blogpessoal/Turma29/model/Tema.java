@@ -26,7 +26,7 @@ public class Tema implements Serializable{
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idTema;
+	private Long idTema;
 	@NotBlank
 	private String tema;
 	
@@ -39,17 +39,20 @@ public class Tema implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Tema(Integer idTema, String tema) {
+	public Tema(Long idTema, @NotBlank String tema) {
 		super();
-		// TODO Auto-generated constructor stub
+		this.idTema = idTema;
+		this.tema = tema;
 	}
-	
-	public Integer getIdTema() {
+
+	public Long getIdTema() {
 		return idTema;
 	}
-	public void setIdTema(Integer idTema) {
+
+	public void setIdTema(Long idTema) {
 		this.idTema = idTema;
 	}
+
 	public String getTema() {
 		return tema;
 	}

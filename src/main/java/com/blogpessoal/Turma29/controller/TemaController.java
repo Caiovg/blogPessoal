@@ -42,7 +42,7 @@ public class TemaController {
 	 * Busca pelo ID
 	 */
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Tema> findById(@PathVariable Integer id){
+	public ResponseEntity<Tema> findById(@PathVariable Long id){
 		ResponseEntity<Tema> obj = service.findById(id);
 		return obj;
 	}
@@ -76,7 +76,7 @@ public class TemaController {
 	 * Deleta um Tema
 	 */
 	@DeleteMapping("/{id}")
-	public void Delete(@PathVariable Integer id) {
+	public void Delete(@PathVariable Long id) {
 		service.delete(id);
 	}
 }

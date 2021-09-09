@@ -31,8 +31,8 @@ public class TemaServices {
 	/*
 	 * Busca pelo ID
 	 */
-	public ResponseEntity<Tema> findById(Integer id) {
-		return repository.findById((int) id).map(
+	public ResponseEntity<Tema> findById(Long id) {
+		return repository.findById((long) id).map(
 				resp -> ResponseEntity.ok(resp)).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + " não existe, Tipo: " + Tema.class.getName()));
 	}
 	
@@ -61,7 +61,7 @@ public class TemaServices {
 		return ResponseEntity.ok(repository.save(temas));
 	}
 	
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		findById(id);
 		repository.deleteById(id);
 	}

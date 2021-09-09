@@ -27,7 +27,7 @@ public class Postagem implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	
 	@NotBlank /*Não aceita espaço vazios*/
 	@Size(min = 5, max = 100)
@@ -54,8 +54,7 @@ public class Postagem implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm", locale = "pt-BR", timezone = "Brazil/East")
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
-	public Postagem(Integer id, String titulo, String txt, Date data) {
-		super();
+	public Postagem(Long id, String titulo, String txt, Date data) {
 		this.id = id;
 		this.titulo = titulo;
 		this.txt = txt;
@@ -68,19 +67,18 @@ public class Postagem implements Serializable{
 	}
 
 	//Metodos Get And Set
-	public Integer getId() {
-		return id;
-	}
-	
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
-
 	public String getTitulo() {
 		return titulo;
 	}
 
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;

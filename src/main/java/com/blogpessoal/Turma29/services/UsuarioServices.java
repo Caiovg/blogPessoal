@@ -34,8 +34,8 @@ public class UsuarioServices {
 	/*
 	 * Busca pelo ID
 	 */
-	public ResponseEntity<Usuario> findById(Integer id) {
-		return repository.findById((int) id).map(
+	public ResponseEntity<Usuario> findById(Long id) {
+		return repository.findById((long) id).map(
 				resp -> ResponseEntity.ok(resp)).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + " não existe, Tipo: " + Usuario.class.getName()));
 	}
 	
@@ -82,7 +82,7 @@ public class UsuarioServices {
 					user.get().setToken(authHeader);
 					user.get().setId(usuarioExistente.getIdUsuario());
 					user.get().setNome(usuarioExistente.getNome());
-					user.get().setSenha(usuarioExistente.getEmail());
+					user.get().setSenha(usuarioExistente.getSenha());
 					
 					return Optional.ofNullable(user);
 			}else {
@@ -114,7 +114,7 @@ public class UsuarioServices {
 		));
 	}
 	
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		findById(id);
 		repository.deleteById(id);
 	}

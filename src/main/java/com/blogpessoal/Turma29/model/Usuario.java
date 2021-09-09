@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class Usuario implements Serializable{
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idUsuario;
+	private Long idUsuario;
 	@NotBlank(message = "Informe seu nome")
 	private String nome;
 	@NotBlank(message = "Informe seu email") 
@@ -43,10 +44,18 @@ public class Usuario implements Serializable{
 	@Size(min = 5)
 	private String senha;
 	
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties({"usuario"})
 	private List<Postagem> minhasPostagens = new ArrayList<>();
 
+	public Usuario(Long id, String nome, String email, String usuario, String senha) {
+		this.idUsuario = id;
+		this.nome = nome;
+		this.email = email;
+		this.usuario = usuario;
+		this.senha = senha;
+	}
+	
 	public Usuario(String nome, String email, String usuario, String senha) {
 		this.nome = nome;
 		this.email = email;
@@ -59,12 +68,15 @@ public class Usuario implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Integer getIdUsuario() {
+	
+	public Long getIdUsuario() {
 		return idUsuario;
 	}
-	public void setIdUsuario(Integer idUsuario) {
+
+	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
+
 	public String getNome() {
 		return nome;
 	}

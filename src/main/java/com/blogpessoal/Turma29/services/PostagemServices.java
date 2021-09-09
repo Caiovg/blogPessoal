@@ -29,8 +29,8 @@ public class PostagemServices {
 	/*
 	 * Busca pelo ID
 	 */
-	public ResponseEntity<Postagem> findById(Integer id) {
-		return repository.findById((int) id).map(
+	public ResponseEntity<Postagem> findById(Long id) {
+		return repository.findById((long) id).map(
 				resp -> ResponseEntity.ok(resp)).orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + " não existe, Tipo: " + Postagem.class.getName()));
 	}
 	
@@ -59,7 +59,7 @@ public class PostagemServices {
 		return ResponseEntity.ok(repository.save(postagem));
 	}
 	
-	public void delete(Integer id) {
+	public void delete(Long id) {
 		findById(id);
 		repository.deleteById(id);
 	}

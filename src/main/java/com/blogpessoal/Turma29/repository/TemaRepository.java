@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.blogpessoal.Turma29.model.Tema;
 
-public interface TemaRepository extends JpaRepository<Tema, Integer>{
+public interface TemaRepository extends JpaRepository<Tema, Long>{
 
 	Optional<Tema> findByTema(String email);
 }
