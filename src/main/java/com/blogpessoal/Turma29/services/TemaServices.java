@@ -62,7 +62,7 @@ public class TemaServices {
 	}
 	
 	public void delete(Integer id) {
-		ResponseEntity<Tema> obj = findById(id);
+		findById(id);
 		repository.deleteById(id);
 	}
 }

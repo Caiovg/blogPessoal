@@ -60,7 +60,7 @@ public class PostagemServices {
 	}
 	
 	public void delete(Integer id) {
-		ResponseEntity<Postagem> obj = findById(id);
+		findById(id);
 		repository.deleteById(id);
 	}
 }

@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.blogpessoal.Turma29.model.Postagem;
 import com.blogpessoal.Turma29.model.UserLogin;
 import com.blogpessoal.Turma29.model.Usuario;
 import com.blogpessoal.Turma29.repository.UsuarioRepository;
@@ -99,12 +98,24 @@ public class UsuarioServices {
 	/*
 	 * Atualizando um usuario
 	 */
-	public ResponseEntity<Usuario> update(Usuario usuario) {
-		return ResponseEntity.ok(repository.save(usuario));
+	public Optional<Object> update(Optional<Usuario> usuario) {
+		return Optional.ofNullable(repository.findById(usuario.get().getIdUsuario()).map(usuarioExistente -> {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			String senhaCriptografada = encoder.encode(usuario.get().getSenha());
+			
+			usuarioExistente.setNome(usuario.get().getNome());
+			usuarioExistente.setEmail(usuario.get().getEmail());
+			usuarioExistente.setUsuario(usuario.get().getUsuario());
+			usuarioExistente.setSenha(senhaCriptografada);
+			return Optional.ofNullable(repository.save(usuarioExistente));
+			
+		}).orElseThrow(() ->
+				new ObjectNotFoundException("Erro ao atualizar usuario")
+		));
 	}
 	
 	public void delete(Integer id) {
-		ResponseEntity<Usuario> obj = findById(id);
+		findById(id);
 		repository.deleteById(id);
 	}
 

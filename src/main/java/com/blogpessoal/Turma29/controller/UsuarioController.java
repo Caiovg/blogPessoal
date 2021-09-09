@@ -75,9 +75,9 @@ public class UsuarioController {
 	 *Update passando todas as informações no body 
 	 */
 	@PutMapping
-	public ResponseEntity<Usuario> Put(@Valid @RequestBody Usuario usuario){
-		ResponseEntity<Usuario> obj = service.update(usuario);
-		return obj;
+	public ResponseEntity<Object> Put(@Valid @RequestBody Optional<Usuario> usuario){
+		Optional<?> obj = service.update(usuario);
+		return ResponseEntity.ok(obj);
 	}
 	
 	/*
