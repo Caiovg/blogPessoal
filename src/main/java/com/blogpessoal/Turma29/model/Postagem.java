@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name  = "postagem")
+@Table(name  = "tb_postagem")
 public class Postagem implements Serializable{
 
 	/*teste*/
@@ -60,11 +60,18 @@ public class Postagem implements Serializable{
 		this.txt = txt;
 		this.data = data;
 	}
-
-	public Postagem() {
-		super();
-		// TODO Auto-generated constructor stub
+	
+	public Postagem(@NotBlank @Size(min = 5, max = 100) String titulo,
+			@NotBlank @Size(min = 15, max = 400) String txt, Tema tema, Usuario usuario) {
+		this.titulo = titulo;
+		this.txt = txt;
+		this.tema = tema;
+		this.usuario = usuario;
 	}
+
+
+
+	public Postagem(){}
 
 	//Metodos Get And Set
 	public String getTitulo() {

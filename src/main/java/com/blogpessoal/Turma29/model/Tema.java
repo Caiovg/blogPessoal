@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name  = "tema")
+@Table(name  = "tb_tema")
 public class Tema implements Serializable{
 
 	/**
@@ -30,13 +31,14 @@ public class Tema implements Serializable{
 	@NotBlank
 	private String tema;
 	
-	@OneToMany(mappedBy = "tema", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "tema", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties({"tema"})
 	private List<Postagem> postagens = new ArrayList<>();
 	
-	public Tema() {
-		super();
-		// TODO Auto-generated constructor stub
+	public Tema(){}
+	
+	public Tema(@NotBlank String tema) {
+		this.tema = tema;
 	}
 	
 	public Tema(Long idTema, @NotBlank String tema) {
