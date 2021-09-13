@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -16,6 +17,7 @@ import springfox.documentation.service.Response;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
+@Configuration
 public class SwaggerConfig {
 
 	@Bean
