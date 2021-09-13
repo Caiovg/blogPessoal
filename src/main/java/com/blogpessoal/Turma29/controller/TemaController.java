@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.blogpessoal.Turma29.model.Tema;
 import com.blogpessoal.Turma29.services.TemaServices;
 
+import io.swagger.annotations.Api;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/tema")
+@Api(tags = "Controlador de Tema", description = "Utilitario de Temas")
 public class TemaController {
 
 	@Autowired

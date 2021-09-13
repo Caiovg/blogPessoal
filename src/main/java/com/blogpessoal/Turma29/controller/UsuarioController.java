@@ -22,9 +22,12 @@ import com.blogpessoal.Turma29.model.UserLogin;
 import com.blogpessoal.Turma29.model.Usuario;
 import com.blogpessoal.Turma29.services.UsuarioServices;
 
+import io.swagger.annotations.Api;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/usuarios")
+@Api(tags = "Controlador de Usuario", description = "Utilitario de Usuarios")
 public class UsuarioController {
 
 	@Autowired

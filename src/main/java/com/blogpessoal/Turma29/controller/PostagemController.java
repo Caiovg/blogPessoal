@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.blogpessoal.Turma29.model.Postagem;
 import com.blogpessoal.Turma29.services.PostagemServices;
 
+import io.swagger.annotations.Api;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/postagens")
+@Api(tags = "Controlador de Postagem", description = "Utilitario de Postagens")
 public class PostagemController {
 
 	/*test*/
