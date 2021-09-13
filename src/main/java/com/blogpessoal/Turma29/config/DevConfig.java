@@ -11,11 +11,11 @@ import com.blogpessoal.Turma29.services.DBService;
 @Profile("dev")
 public class DevConfig {
 
-	@Autowired
-	private DBService service;
+	//@Autowired
+	//private DBService service;
 	
-	@Bean
-	public void instanciaDB() {	
-		this.service.instanceDB();
-	}
+	//@Bean
+	//public void instanciaDB() {	
+		//this.service.instanceDB();
+	//}
 }
