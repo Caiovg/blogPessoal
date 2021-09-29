@@ -44,10 +44,24 @@ public class Usuario implements Serializable{
 	@Size(min = 5)
 	private String senha;
 	
+	private String foto;
+	
+	private String tipo;
+	
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties({"usuario"})
 	private List<Postagem> minhasPostagens = new ArrayList<>();
 
+	public Usuario(Long id, String nome, String email, String usuario, String senha, String foto, String tipo) {
+		this.idUsuario = id;
+		this.nome = nome;
+		this.email = email;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+		this.tipo = tipo;
+	}
+	
 	public Usuario(Long id, String nome, String email, String usuario, String senha) {
 		this.idUsuario = id;
 		this.nome = nome;
@@ -63,10 +77,7 @@ public class Usuario implements Serializable{
 		this.senha = senha;
 	}
 	
-	public Usuario() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public Usuario() {}
 	
 	
 	public Long getIdUsuario() {
@@ -111,5 +122,20 @@ public class Usuario implements Serializable{
 	public void setMinhasPostagens(List<Postagem> minhasPostagens) {
 		this.minhasPostagens = minhasPostagens;
 	}
-	
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 }

@@ -83,6 +83,8 @@ public class UsuarioServices {
 					user.get().setId(usuarioExistente.getIdUsuario());
 					user.get().setNome(usuarioExistente.getNome());
 					user.get().setSenha(usuarioExistente.getSenha());
+					user.get().setFoto(usuarioExistente.getFoto());
+					user.get().setTipo(usuarioExistente.getTipo());
 					
 					return Optional.ofNullable(user);
 			}else {
@@ -107,6 +109,7 @@ public class UsuarioServices {
 			usuarioExistente.setEmail(usuario.get().getEmail());
 			usuarioExistente.setUsuario(usuario.get().getUsuario());
 			usuarioExistente.setSenha(senhaCriptografada);
+			usuarioExistente.setFoto(usuario.get().getUsuario());
 			return Optional.ofNullable(repository.save(usuarioExistente));
 			
 		}).orElseThrow(() ->
